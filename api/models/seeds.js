@@ -23,9 +23,16 @@ let seedSchema = new mongoose.Schema({
     difficulty: {
         type: Number
     },
+    description: {
+        type: String
+    },
     ownerId: {
         type: String,
-        required: 'Flags are required'
+        required: 'Owner Id is required'
+    },
+    ownerUsername: {
+        type: String,
+        required: 'Owner Username is required'
     },
 })
 

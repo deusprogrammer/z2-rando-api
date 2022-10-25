@@ -1,5 +1,4 @@
 const express = require('express');
-const Seeds = require('../models/seeds');
 
 import {authenticatedUserHasRole, getAuthenticatedTwitchUserId} from '../utils/SecurityHelper';
 
@@ -25,7 +24,6 @@ router.route("/")
         }
 
         try {
-            // Save body
             request.body.ownerId = twitchUser;
             let seed = await Seeds.create(request.body);
             return response.json(seed);
