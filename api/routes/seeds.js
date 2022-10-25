@@ -1,7 +1,7 @@
 const express = require('express');
 const Seeds = require('../models/seeds');
 
-import {authenticatedUserHasRole, getAuthenticatedTwitchUserId} from '../utils/SecurityHelper';
+import {authenticatedUserHasRole, getAuthenticatedTwitchUserId, getAuthenticatedTwitchUserName} from '../utils/SecurityHelper';
 
 let router = express.Router();
 
@@ -19,6 +19,7 @@ router.route("/")
     })
     .post(async (request, response) => {
         let twitchUser = getAuthenticatedTwitchUserId(request);
+        let twitchUsername = getAuthenticatedTwitchUserName(request);
         if (authenticatedUserHasRole(request, "ANONYMOUS_USER")) {
             response.status(403);
             return response.send("Insufficient privileges");
@@ -26,6 +27,7 @@ router.route("/")
 
         try {
             request.body.ownerId = twitchUser;
+            request.body.ownerUsername = twitchUsername;
             let seed = await Seeds.create(request.body);
             return response.json(seed);
         } catch (error) {
