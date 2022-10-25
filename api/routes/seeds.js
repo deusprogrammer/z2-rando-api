@@ -1,4 +1,5 @@
 const express = require('express');
+const Seeds = require('../models/seeds');
 
 import {authenticatedUserHasRole, getAuthenticatedTwitchUserId} from '../utils/SecurityHelper';
 
@@ -55,7 +56,7 @@ router.route("/:id")
         }
 
         try {
-            let updated = await Seeds.findByIdAndUpdate(request.params.id, request.body);
+            await Seeds.findByIdAndUpdate(request.params.id, request.body);
             return response.json(request.body);
         } catch (error) {
             console.error(error);
